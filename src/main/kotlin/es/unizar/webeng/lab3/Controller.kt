@@ -21,15 +21,27 @@ class EmployeeController(
     fun all(): Iterable<Employee> = repository.findAll()
 
     @PostMapping("/employees")
+    /**
+     *  Se dice que se va a mandar un json [newEmployee].
+     */
     fun newEmployee(@RequestBody newEmployee: Employee): ResponseEntity<Employee> {
         val employee = repository.save(newEmployee)
+        /**
+         * Location es una uri donde se guarda el puerto,end-point y si es https o http
+         */
         val location = ServletUriComponentsBuilder
             .fromCurrentServletMapping()
             .path("/employees/{id}")
             .build(employee.id)
         return ResponseEntity.created(location).body(employee)
+        /**
+         * Permite añadir informacion extra para enviar po HTTP.
+         */
     }
 
+    /**
+     * orElseThrow para que el servidor devuelva la excepción discrita en [EmployeeNotFoundException]
+     */
     @GetMapping("/employees/{id}")
     fun one(@PathVariable id: Long): Employee = repository.findById(id).orElseThrow { EmployeeNotFoundException(id) }
 
