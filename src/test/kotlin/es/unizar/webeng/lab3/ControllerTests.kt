@@ -131,9 +131,7 @@ class ControllerTests {
             employeeRepository.save(any())
             employeeRepository.deleteById(any())
         }
-
     }
-
     @Test
     fun `PUT is idempotent but not safe`() {
 
@@ -180,7 +178,6 @@ class ControllerTests {
         verify(exactly = 2) {
             employeeRepository.save(Employee("Tom", "Manager", 1))
         }
-
     }
 
     @Test
@@ -208,6 +205,5 @@ class ControllerTests {
         verify(exactly = 1) {
             employeeRepository.deleteById(1)
         }
-
     }
 }
